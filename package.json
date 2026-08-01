@@ -1,0 +1,52 @@
+{
+  "name": "claudepet",
+  "version": "0.1.0",
+  "description": "Cross-platform virtual desktop pet for Claude activity status",
+  "main": "src/main/main.js",
+  "author": "akkki8844",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "check": "node --check src/main/main.js && node --check src/main/monitor.js && node --check src/main/state-machine.js && node --check src/preload/preload.js && node --check src/renderer/renderer.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^39.8.1",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.akkki8844.claudepet",
+    "productName": "ClaudePet",
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "tar.gz"
+      ],
+      "category": "Utility"
+    }
+  }
+}
