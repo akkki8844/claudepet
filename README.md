@@ -3,6 +3,8 @@
 Cross-platform virtual desktop pet that visualizes Claude activity (idle, working, done).  
 No AI API calls are made by this app.
 
+The app now renders the Claude critter and performs random idle motions (hop/look/wiggle/stretch) similar to desktop pet behavior.
+
 ## Chosen Tech Stack
 
 - **Electron + Node.js**
@@ -37,9 +39,16 @@ No AI API calls are made by this app.
 ## Install & Run
 
 ```bash
+cd claudepet
 npm install
 npm start
 ```
+
+When the app starts, the Claude critter appears immediately.
+
+## Shortcut
+
+- `Ctrl+Y` (Windows/Linux) or `Cmd+Y` (macOS): Toggle show/hide ClaudePet
 
 ## Monitoring Modes
 

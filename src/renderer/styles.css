@@ -17,47 +17,172 @@ body {
 }
 
 .pet-shell {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  width: 190px;
+  height: 190px;
+  position: relative;
   display: grid;
-  place-items: center;
+  place-items: end center;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #fff;
-  backdrop-filter: blur(3px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
 }
 
-.pet-face {
-  font-size: 46px;
-  line-height: 1;
+.pet-glow {
+  position: absolute;
+  bottom: 10px;
+  width: 140px;
+  height: 40px;
+  border-radius: 50%;
+  filter: blur(10px);
+  background: rgba(101, 115, 132, 0.48);
+  transition: background 220ms ease, transform 220ms ease;
+}
+
+.pet-avatar {
+  width: 172px;
+  height: auto;
+  -webkit-user-drag: none;
+  user-select: none;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+}
+
+.behavior-none {
+  transform: none;
+}
+
+.behavior-hop {
+  animation: hop 700ms ease-in-out;
+}
+
+.behavior-look-left {
+  animation: look-left 1000ms ease-in-out;
+}
+
+.behavior-look-right {
+  animation: look-right 1000ms ease-in-out;
+}
+
+.behavior-wiggle {
+  animation: wiggle 1100ms ease-in-out;
+}
+
+.behavior-stretch {
+  animation: stretch 900ms ease-in-out;
 }
 
 #state-label {
-  margin: 2px 0 0;
-  font-size: 14px;
+  margin: 0;
+  position: absolute;
+  bottom: -2px;
+  font-size: 12px;
   font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(244, 248, 255, 0.94);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 
-.state-idle .pet-shell {
-  background: radial-gradient(circle at top, rgba(114, 130, 148, 0.8), rgba(41, 46, 56, 0.8));
+.state-idle .pet-glow {
+  background: rgba(101, 115, 132, 0.48);
 }
 
-.state-working .pet-shell {
-  background: radial-gradient(circle at top, rgba(65, 170, 255, 0.85), rgba(15, 80, 150, 0.85));
-  animation: pulse 1s ease-in-out infinite alternate;
+.state-working .pet-glow {
+  background: rgba(83, 178, 255, 0.6);
+  animation: glow-pulse 900ms ease-in-out infinite alternate;
 }
 
-.state-done .pet-shell {
-  background: radial-gradient(circle at top, rgba(72, 207, 118, 0.9), rgba(20, 120, 57, 0.85));
+.state-done .pet-glow {
+  background: rgba(91, 221, 128, 0.62);
+  animation: glow-pop 420ms ease-out;
 }
 
-@keyframes pulse {
+@keyframes hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes look-left {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  35%,
+  65% {
+    transform: translateX(-5px) rotate(-3deg);
+  }
+}
+
+@keyframes look-right {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  35%,
+  65% {
+    transform: translateX(5px) rotate(3deg);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-2.5deg);
+  }
+  40% {
+    transform: rotate(2deg);
+  }
+  60% {
+    transform: rotate(-2deg);
+  }
+  80% {
+    transform: rotate(1.5deg);
+  }
+}
+
+@keyframes stretch {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  40% {
+    transform: scale(1.04, 0.95);
+  }
+  70% {
+    transform: scale(0.97, 1.03);
+  }
+}
+
+@keyframes glow-pulse {
   from {
-    transform: scale(1);
+    transform: scaleX(1);
+    opacity: 0.75;
   }
   to {
-    transform: scale(1.06);
+    transform: scaleX(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes glow-pop {
+  0% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+  60% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
   }
 }
