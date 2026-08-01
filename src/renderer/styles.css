@@ -17,8 +17,8 @@ body {
 }
 
 .pet-shell {
-  width: 190px;
-  height: 190px;
+  width: 120px;
+  height: 120px;
   position: relative;
   display: grid;
   place-items: end center;
@@ -27,9 +27,9 @@ body {
 
 .pet-glow {
   position: absolute;
-  bottom: 10px;
-  width: 140px;
-  height: 40px;
+  bottom: 6px;
+  width: 90px;
+  height: 24px;
   border-radius: 50%;
   filter: blur(10px);
   background: rgba(101, 115, 132, 0.48);
@@ -37,16 +37,17 @@ body {
 }
 
 .pet-avatar {
-  width: 172px;
+  width: 96px;
   height: auto;
   -webkit-user-drag: none;
   user-select: none;
   transform-origin: center bottom;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+  animation: idle-bob 2.6s ease-in-out infinite;
 }
 
 .behavior-none {
-  transform: none;
+  animation: idle-bob 2.6s ease-in-out infinite;
 }
 
 .behavior-hop {
@@ -66,14 +67,22 @@ body {
 }
 
 .behavior-stretch {
-  animation: stretch 900ms ease-in-out;
+  animation: stretch 950ms ease-in-out;
+}
+
+.behavior-squish {
+  animation: squish 900ms ease-in-out;
+}
+
+.behavior-float {
+  animation: float 1200ms ease-in-out;
 }
 
 #state-label {
   margin: 0;
   position: absolute;
-  bottom: -2px;
-  font-size: 12px;
+  bottom: -6px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.01em;
   color: rgba(244, 248, 255, 0.94);
@@ -100,10 +109,10 @@ body {
     transform: translateY(0);
   }
   40% {
-    transform: translateY(-10px);
+    transform: translateY(-12px);
   }
   60% {
-    transform: translateY(-6px);
+    transform: translateY(-7px);
   }
 }
 
@@ -114,7 +123,7 @@ body {
   }
   35%,
   65% {
-    transform: translateX(-5px) rotate(-3deg);
+    transform: translateX(-7px) rotate(-5deg);
   }
 }
 
@@ -125,7 +134,7 @@ body {
   }
   35%,
   65% {
-    transform: translateX(5px) rotate(3deg);
+    transform: translateX(7px) rotate(5deg);
   }
 }
 
@@ -154,10 +163,46 @@ body {
     transform: scale(1, 1);
   }
   40% {
-    transform: scale(1.04, 0.95);
+    transform: scale(1.08, 0.92);
   }
   70% {
-    transform: scale(0.97, 1.03);
+    transform: scale(0.95, 1.06);
+  }
+}
+
+@keyframes squish {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  30% {
+    transform: scale(1.12, 0.88);
+  }
+  60% {
+    transform: scale(0.92, 1.08);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-9px) rotate(-2deg);
+  }
+  65% {
+    transform: translateY(-3px) rotate(2deg);
+  }
+}
+
+@keyframes idle-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
   }
 }
 

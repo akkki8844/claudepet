@@ -1,5 +1,5 @@
 const path = require("node:path");
-const { app, BrowserWindow, Menu, Tray, nativeImage, globalShortcut } = require("electron");
+const { app, BrowserWindow, Menu, Tray, nativeImage, globalShortcut, screen } = require("electron");
 const { createMonitor } = require("./monitor");
 const { PetStateMachine } = require("./state-machine");
 
@@ -11,9 +11,17 @@ const visibilityShortcut = "CommandOrControl+Y";
 const stateMachine = new PetStateMachine({ doneDurationMs: 2800 });
 
 function createWindow() {
+  const workArea = screen.getPrimaryDisplay().workArea;
+  const windowWidth = 150;
+  const windowHeight = 150;
+  const x = Math.round(workArea.x + workArea.width - windowWidth - 24);
+  const y = Math.round(workArea.y + workArea.height / 2 - windowHeight / 2);
+
   mainWindow = new BrowserWindow({
-    width: 220,
-    height: 220,
+    width: windowWidth,
+    height: windowHeight,
+    x,
+    y,
     frame: false,
     transparent: true,
     hasShadow: false,
