@@ -1,11 +1,12 @@
 const path = require("node:path");
-const { app, BrowserWindow, Menu, Tray, nativeImage } = require("electron");
+const { app, BrowserWindow, Menu, Tray, nativeImage, globalShortcut } = require("electron");
 const { createMonitor } = require("./monitor");
 const { PetStateMachine } = require("./state-machine");
 
 let mainWindow = null;
 let tray = null;
 let monitor = null;
+const visibilityShortcut = "CommandOrControl+Y";
 
 const stateMachine = new PetStateMachine({ doneDurationMs: 2800 });
 
@@ -29,9 +30,20 @@ function createWindow() {
   mainWindow.setAlwaysOnTop(true, "screen-saver");
   mainWindow.setVisibleOnAllWorkspaces(true);
   mainWindow.loadFile(path.join(__dirname, "../renderer/index.html"));
+  mainWindow.show();
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
+}
+
+function togglePetVisibility() {
+  if (!mainWindow) return;
+  if (mainWindow.isVisible()) {
+    mainWindow.hide();
+  } else {
+    mainWindow.show();
+    mainWindow.focus();
+  }
 }
 
 function createTray() {
@@ -43,14 +55,7 @@ function createTray() {
   const menu = Menu.buildFromTemplate([
     {
       label: "Show/Hide Pet",
-      click: () => {
-        if (!mainWindow) return;
-        if (mainWindow.isVisible()) {
-          mainWindow.hide();
-        } else {
-          mainWindow.show();
-        }
-      }
+      click: togglePetVisibility
     },
     {
       label: "Quit",
@@ -86,6 +91,7 @@ app.whenReady().then(() => {
   createWindow();
   createTray();
   startMonitoring();
+  globalShortcut.register(visibilityShortcut, togglePetVisibility);
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -95,6 +101,7 @@ app.whenReady().then(() => {
 });
 
 app.on("before-quit", () => {
+  globalShortcut.unregisterAll();
   monitor?.stop();
 });
 

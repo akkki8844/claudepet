@@ -37,9 +37,16 @@ No AI API calls are made by this app.
 ## Install & Run
 
 ```bash
+cd claudepet
 npm install
 npm start
 ```
+
+When the app starts, the Claude critter appears immediately.
+
+## Shortcut
+
+- `Ctrl+Y` (Windows/Linux) or `Cmd+Y` (macOS): Toggle show/hide ClaudePet
 
 ## Monitoring Modes
 
