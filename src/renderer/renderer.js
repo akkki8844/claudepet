@@ -15,11 +15,13 @@ const classes = {
 };
 
 const behaviors = [
-  { className: "behavior-hop", duration: 700 },
-  { className: "behavior-look-left", duration: 1000 },
-  { className: "behavior-look-right", duration: 1000 },
-  { className: "behavior-wiggle", duration: 1100 },
-  { className: "behavior-stretch", duration: 900 }
+  { className: "behavior-hop", duration: 700, weight: 3 },
+  { className: "behavior-look-left", duration: 1000, weight: 1 },
+  { className: "behavior-look-right", duration: 1000, weight: 1 },
+  { className: "behavior-wiggle", duration: 1100, weight: 3 },
+  { className: "behavior-stretch", duration: 950, weight: 2 },
+  { className: "behavior-squish", duration: 900, weight: 2 },
+  { className: "behavior-float", duration: 1200, weight: 2 }
 ];
 
 let currentState = "IDLE";
@@ -41,7 +43,8 @@ function stopBehaviorLoop() {
 
 function pickBehavior() {
   const pool = behaviors.filter((entry) => entry.className !== lastBehaviorClass);
-  const selected = pool[Math.floor(Math.random() * pool.length)];
+  const weightedPool = pool.flatMap((entry) => Array(entry.weight || 1).fill(entry));
+  const selected = weightedPool[Math.floor(Math.random() * weightedPool.length)];
   lastBehaviorClass = selected.className;
   return selected;
 }
@@ -49,7 +52,7 @@ function pickBehavior() {
 function scheduleRandomBehavior() {
   if (currentState !== "IDLE") return;
 
-  const delayMs = 2200 + Math.floor(Math.random() * 3000);
+  const delayMs = 1600 + Math.floor(Math.random() * 2400);
   behaviorTimer = setTimeout(() => {
     if (currentState !== "IDLE") return;
     const selected = pickBehavior();
